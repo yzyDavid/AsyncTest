@@ -27,12 +27,13 @@ namespace AsyncTest
         public static async Task<int> DoCompute()
         {
             int i = 0, sum = 0;
-//            int[] a = new int[Int32.MaxValue];
-            for(i=0;i<int.MaxValue;i++)
+            await Task.Run(() =>
             {
-//                a[i] = i;
-                sum += i*(i%2);
-            }
+                for (i = 0; i < int.MaxValue; i++)
+                {
+                    sum += i * (i % 2);
+                }
+            });
             return sum;
 
         }
@@ -48,8 +49,8 @@ namespace AsyncTest
 
         private async void Action_Click(object sender, RoutedEventArgs e)
         {
-            int Result = 0;
-            Result=await MainTask.DoCompute();
+            int Result;
+            Result = await MainTask.DoCompute();
             Title.Text = Convert.ToString(Result);
 
 
